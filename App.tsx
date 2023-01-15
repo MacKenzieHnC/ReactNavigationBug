@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 /**
  * Sandbox to debug React Navigation for Windows
  *
@@ -9,20 +10,24 @@ import {Button, Text, View} from 'react-native';
 
 // Navigation
 import {DarkTheme, NavigationContainer} from '@react-navigation/native';
-import {CommonActions, NavigationAction} from '@react-navigation/routers';
-import {createStackNavigator} from '@react-navigation/stack';
+import {CommonActions} from '@react-navigation/routers';
+import {
+  createStackNavigator,
+  StackNavigationProp,
+} from '@react-navigation/stack';
 
-function SomeOtherScreen() {
-  return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text style={{fontSize: 30}}>Other Screen</Text>
-    </View>
-  );
-}
+type RootStackParamList = {
+  'Some Screen': {name: string};
+  'Some Other Screen': {name: string};
+};
 
-function SomeScreen({navigation}) {
+type Props = {
+  navigation: StackNavigationProp<RootStackParamList>;
+};
+
+function SomeScreen({navigation}: Props) {
   const [someValue, setSomeValue] = useState(1);
-  console.log('Some Screen has been rendered');
+  console.log('Some Screen');
 
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
@@ -38,15 +43,6 @@ function SomeScreen({navigation}) {
           title={'Increment'}
           onPress={() => setSomeValue(someValue + 1)}
         />
-      </View>
-
-      <View>
-        <Text style={{fontSize: 40}}>Re-renders, destroying state</Text>
-        <Button title={'Push'} onPress={() => navigation.push('Some Screen')} />
-        <Button
-          title={'Replace'}
-          onPress={() => navigation.replace('Some Screen')}
-        />
         <Button
           title={'Navigate'}
           onPress={() =>
@@ -55,38 +51,21 @@ function SomeScreen({navigation}) {
             )
           }
         />
-        <Button
-          title={'Reset'}
-          onPress={() =>
-            navigation.reset({index: 1, routes: [{name: 'Some Screen'}]})
-          }
-        />
-      </View>
-
-      <View>
-        <Text style={{fontSize: 40}}>Re-renders, preserving state</Text>
-        <Button
-          title={'Set Params'}
-          onPress={() =>
-            navigation.dispatch(CommonActions.setParams({user: 'Wojtek'}))
-          }
-        />
-      </View>
-
-      <View>
-        <Text style={{fontSize: 40}}>Does not re-render</Text>
-        <Button
-          title={'Navigate To Self'}
-          onPress={() =>
-            navigation.dispatch(CommonActions.navigate({name: 'Some Screen'}))
-          }
-        />
       </View>
     </View>
   );
 }
 
-const Stack = createStackNavigator();
+function SomeOtherScreen() {
+  console.log('Some Other Screen');
+  return (
+    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <Text style={{fontSize: 30}}>Other Screen</Text>
+    </View>
+  );
+}
+
+const Stack = createStackNavigator<RootStackParamList>();
 
 const App = () => {
   return (
