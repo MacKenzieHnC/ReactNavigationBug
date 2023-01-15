@@ -11,9 +11,9 @@ import {Button, Text, View} from 'react-native';
 // Navigation
 import {DarkTheme, NavigationContainer} from '@react-navigation/native';
 import {
-  createStackNavigator,
-  StackNavigationProp,
-} from '@react-navigation/stack';
+  createNativeStackNavigator,
+  NativeStackNavigationProp,
+} from '@react-navigation/native-stack';
 
 type RootStackParamList = {
   'Some Screen': undefined;
@@ -21,7 +21,7 @@ type RootStackParamList = {
 };
 
 type Props = {
-  navigation: StackNavigationProp<RootStackParamList>;
+  navigation: NativeStackNavigationProp<RootStackParamList>;
 };
 
 function SomeScreen({navigation}: Props) {
@@ -34,10 +34,13 @@ function SomeScreen({navigation}: Props) {
         <Text
           style={{
             fontSize: 40,
+            color: 'white',
           }}>
           Value
         </Text>
-        <Text style={{fontSize: 30, textAlign: 'center'}}>{someValue}</Text>
+        <Text style={{fontSize: 30, textAlign: 'center', color: 'white'}}>
+          {someValue}
+        </Text>
         <Button
           title={'Increment'}
           onPress={() => setSomeValue(someValue + 1)}
@@ -55,12 +58,12 @@ function SomeOtherScreen() {
   console.log('Some Other Screen');
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text style={{fontSize: 30}}>Other Screen</Text>
+      <Text style={{fontSize: 30, color: 'white'}}>Other Screen</Text>
     </View>
   );
 }
 
-const Stack = createStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const App = () => {
   return (
