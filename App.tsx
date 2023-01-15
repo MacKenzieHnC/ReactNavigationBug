@@ -10,15 +10,14 @@ import {Button, Text, View} from 'react-native';
 
 // Navigation
 import {DarkTheme, NavigationContainer} from '@react-navigation/native';
-import {CommonActions} from '@react-navigation/routers';
 import {
   createStackNavigator,
   StackNavigationProp,
 } from '@react-navigation/stack';
 
 type RootStackParamList = {
-  'Some Screen': {name: string};
-  'Some Other Screen': {name: string};
+  'Some Screen': undefined;
+  'Some Other Screen': undefined;
 };
 
 type Props = {
@@ -45,11 +44,7 @@ function SomeScreen({navigation}: Props) {
         />
         <Button
           title={'Navigate'}
-          onPress={() =>
-            navigation.dispatch(
-              CommonActions.navigate({name: 'Some Other Screen'}),
-            )
-          }
+          onPress={() => navigation.push('Some Other Screen')}
         />
       </View>
     </View>
